@@ -1,7 +1,9 @@
 // src/app/features/dashboard/dashboard.component.ts
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { CollectionRequest } from '../../shared/models/collection-request.model';
+import { AuthService } from '../../core/services/auth.service';
 import { User } from '../../shared/models/user.model';
 
 @Component({
@@ -27,12 +29,10 @@ import { User } from '../../shared/models/user.model';
     </div>
   `
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
   currentUser$: Observable<User | null>;
 
-  constructor(private store: Store<{ auth: { user: User | null } }>) {
-    this.currentUser$ = this.store.select(state => state.auth.user);
+  constructor(private authService: AuthService) {
+    this.currentUser$ = this.authService.currentUser$;
   }
-
-  ngOnInit(): void {}
 }
