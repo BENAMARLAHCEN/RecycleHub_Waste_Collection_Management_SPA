@@ -1,3 +1,10 @@
+interface PointsConfig {
+  [key: string]: number;
+  plastic: number;
+  glass: number;
+  paper: number;
+  metal: number;
+}
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:4200', // Since we're using localStorage, this isn't used but included for future API integration
@@ -12,7 +19,7 @@ export const environment = {
     glass: 1,
     paper: 1,
     metal: 5
-  },
+  } as PointsConfig,
   maxCollectionWeight: 10, // in kg
   minCollectionWeight: 1,
   maxPendingRequests: 3,
