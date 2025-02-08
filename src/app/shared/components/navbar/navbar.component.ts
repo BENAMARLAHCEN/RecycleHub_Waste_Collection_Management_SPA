@@ -35,7 +35,7 @@ import * as AuthActions from '../../../store/actions/auth.actions';
               class="text-gray-700 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out">
               Home
             </a>
-            <a routerLink="/materials"
+            <a routerLink="/#materials"
               routerLinkActive="text-green-600"
               class="text-gray-700 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out">
               Materials

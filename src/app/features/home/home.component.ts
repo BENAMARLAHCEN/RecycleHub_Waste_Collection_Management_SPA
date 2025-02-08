@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
+// src/app/features/home/home.component.ts
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { StatisticsService, HomeStatistics } from '../../core/services/statistics.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-home',
   template: `
-
     <!-- Hero Section -->
     <div class="relative bg-green-50">
       <div class="container mx-auto px-4 py-16">
@@ -24,7 +27,7 @@ import { Router } from '@angular/router';
                 Get Started
               </button>
               <button
-                (click)="router.navigate(['/about'])"
+                (click)="router.navigate(['/#how-it-works'])"
                 class="px-8 py-4 border-2 border-green-600 text-green-600 rounded-lg hover:bg-green-50 transition duration-300">
                 Learn More
               </button>
@@ -38,26 +41,34 @@ import { Router } from '@angular/router';
         <!-- Stats Section -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-16">
           <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
-            <div class="text-3xl font-bold text-green-600 mb-2">2,500+</div>
+            <div class="text-3xl font-bold text-green-600 mb-2">
+              {{ (statistics$ | async)?.activeUsers || 0 }}+
+            </div>
             <div class="text-gray-600">Active Users</div>
           </div>
           <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
-            <div class="text-3xl font-bold text-green-600 mb-2">15,000kg</div>
+            <div class="text-3xl font-bold text-green-600 mb-2">
+              {{ (statistics$ | async)?.totalWasteRecycled || 0 }}kg
+            </div>
             <div class="text-gray-600">Waste Recycled</div>
           </div>
           <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
-            <div class="text-3xl font-bold text-green-600 mb-2">200+</div>
+            <div class="text-3xl font-bold text-green-600 mb-2">
+              {{ (statistics$ | async)?.totalCollectors || 0 }}+
+            </div>
             <div class="text-gray-600">Certified Collectors</div>
           </div>
           <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
-            <div class="text-3xl font-bold text-green-600 mb-2">₫50,000+</div>
+            <div class="text-3xl font-bold text-green-600 mb-2">
+              {{ (statistics$ | async)?.totalRewardsGiven || 0 }}Dh
+            </div>
             <div class="text-gray-600">Rewards Given</div>
           </div>
         </div>
       </div>
 
       <!-- How It Works Section -->
-      <div class="bg-white py-16">
+      <div class="bg-white py-16" id="how-it-works">
         <div class="container mx-auto px-4">
           <h2 class="text-3xl lg:text-4xl font-bold text-center text-gray-800 mb-12">
             How RecycleHub Works
@@ -95,7 +106,7 @@ import { Router } from '@angular/router';
       </div>
 
       <!-- Materials Section -->
-      <div class="bg-green-50 py-16">
+      <div class="bg-green-50 py-16" id="materials">
         <div class="container mx-auto px-4">
           <h2 class="text-3xl lg:text-4xl font-bold text-center text-gray-800 mb-12">
             Materials We Recycle
@@ -106,28 +117,28 @@ import { Router } from '@angular/router';
                 <img src="assets/icons/plastic-icon.svg" alt="Plastic" class="w-12 h-12 mx-auto">
               </div>
               <h3 class="text-xl font-semibold mb-2 text-center">Plastic</h3>
-              <p class="text-gray-600 text-center">2 points/kg</p>
+              <p class="text-gray-600 text-center">{{ pointsConfig.plastic }} points/kg</p>
             </div>
             <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition duration-300">
               <div class="bg-green-100 rounded-lg p-4 mb-4">
                 <img src="assets/icons/glass-icon.svg" alt="Glass" class="w-12 h-12 mx-auto">
               </div>
               <h3 class="text-xl font-semibold mb-2 text-center">Glass</h3>
-              <p class="text-gray-600 text-center">1 point/kg</p>
+              <p class="text-gray-600 text-center">{{ pointsConfig.glass }} point/kg</p>
             </div>
             <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition duration-300">
               <div class="bg-yellow-100 rounded-lg p-4 mb-4">
                 <img src="assets/icons/paper-icon.svg" alt="Paper" class="w-12 h-12 mx-auto">
               </div>
               <h3 class="text-xl font-semibold mb-2 text-center">Paper</h3>
-              <p class="text-gray-600 text-center">1 point/kg</p>
+              <p class="text-gray-600 text-center">{{ pointsConfig.paper }} point/kg</p>
             </div>
             <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition duration-300">
               <div class="bg-gray-100 rounded-lg p-4 mb-4">
                 <img src="assets/icons/metal-icon.svg" alt="Metal" class="w-12 h-12 mx-auto">
               </div>
               <h3 class="text-xl font-semibold mb-2 text-center">Metal</h3>
-              <p class="text-gray-600 text-center">5 points/kg</p>
+              <p class="text-gray-600 text-center">{{ pointsConfig.metal }} points/kg</p>
             </div>
           </div>
         </div>
@@ -152,6 +163,16 @@ import { Router } from '@angular/router';
     </div>
   `
 })
-export class HomeComponent {
-  constructor(public router: Router) {}
+export class HomeComponent implements OnInit {
+  statistics$: Observable<HomeStatistics>;
+  pointsConfig = environment.pointsConfig;
+
+  constructor(
+    public router: Router,
+    private statisticsService: StatisticsService
+  ) {
+    this.statistics$ = this.statisticsService.getHomeStatistics();
+  }
+
+  ngOnInit(): void {}
 }
