@@ -1,4 +1,4 @@
-// src/app/core/services/collection-request.service.ts
+
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError, switchMap, take } from 'rxjs';
 import { CollectionRequest, RequestStatus, WasteType, WasteItem } from '../../shared/models/collection-request.model';
@@ -105,8 +105,6 @@ export class CollectionRequestService {
         }
 
         const points = this.calculatePoints(request.wasteItems, validatedWeight);
-
-        // Update user points
         const users = JSON.parse(localStorage.getItem(environment.localStorage.usersKey) || '[]');
         const userIndex = users.findIndex((u: User) => u.id === request.userId);
         if (userIndex !== -1) {

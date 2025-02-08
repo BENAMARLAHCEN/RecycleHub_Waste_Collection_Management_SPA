@@ -16,17 +16,3 @@ export interface User {
   createdAt?: Date;
   updatedAt?: Date;
 }
-
-export interface LoginCredentials {
-  email: string;
-  password: string;
-}
-
-export interface RegisterCredentials extends Omit<User, 'id' | 'isCollector' | 'points' | 'createdAt' | 'updatedAt'> {
-  password: string;
-}
-
-export enum UserRole {
-  COLLECTOR = 'COLLECTOR',
-  PARTICULAR = 'PARTICULAR'
-}

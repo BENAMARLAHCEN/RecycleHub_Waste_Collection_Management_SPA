@@ -1,4 +1,4 @@
-// src/app/shared/components/navbar/navbar.component.ts
+
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -90,7 +90,6 @@ import * as AuthActions from '../../../store/actions/auth.actions';
               </div>
             </ng-container>
 
-            <!-- Auth Buttons for Non-authenticated Users -->
             <ng-template #authButtons>
               <div class="flex items-center space-x-4">
                 <a routerLink="/auth/login"

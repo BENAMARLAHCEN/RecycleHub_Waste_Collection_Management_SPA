@@ -1,4 +1,4 @@
-// src/app/features/dashboard/components/collector-dashboard/collector-dashboard.component.ts
+
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, take, switchMap } from 'rxjs';
@@ -160,7 +160,6 @@ import { User } from '../../../../shared/models/user.model';
     </div>
   `
 })
-// Continuing CollectorDashboardComponent...
 export class CollectorDashboardComponent implements OnInit {
   availableRequests$: Observable<CollectionRequest[]>;
   activeCollections$: Observable<CollectionRequest[]>;
@@ -180,24 +179,16 @@ export class CollectorDashboardComponent implements OnInit {
     this.validationForm = this.fb.group({
       validatedWeight: ['', [Validators.required, Validators.min(0)]]
     });
-
-    // Initialize observables
     this.availableRequests$ = new Observable<CollectionRequest[]>();
     this.activeCollections$ = new Observable<CollectionRequest[]>();
     this.collectorStats$ = new Observable<CollectorStats>();
   }
 
   ngOnInit(): void {
-    // Load collector data based on current user
     this.currentUser$.pipe(take(1)).subscribe(user => {
       if (user?.id && user?.city) {
-        // Load available requests in collector's city
         this.availableRequests$ = this.collectorService.getAvailableRequestsByCity(user.city);
-
-        // Load active collections for this collector
         this.activeCollections$ = this.collectorService.getActiveCollections(user.id);
-
-        // Load collector stats
         this.collectorStats$ = this.collectorService.getCollectorStats(user.id);
       }
     });
@@ -214,7 +205,6 @@ export class CollectorDashboardComponent implements OnInit {
       })
     ).subscribe({
       next: () => {
-        // Refresh the lists after accepting
         this.refreshCollections();
       },
       error: (error) => {
@@ -238,7 +228,7 @@ export class CollectorDashboardComponent implements OnInit {
   }
 
   validateCollection(collection: CollectionRequest): void {
-    if (this.validationForm.valid && collection.id) {  // Added null check
+    if (this.validationForm.valid && collection.id) {
       const validatedWeight = this.validationForm.get('validatedWeight')?.value;
 
       this.collectorService.completeCollection(
@@ -275,13 +265,8 @@ export class CollectorDashboardComponent implements OnInit {
   private refreshCollections(): void {
     this.currentUser$.pipe(take(1)).subscribe(user => {
       if (user?.id && user?.city) {
-        // Refresh available requests
         this.availableRequests$ = this.collectorService.getAvailableRequestsByCity(user.city);
-
-        // Refresh active collections
         this.activeCollections$ = this.collectorService.getActiveCollections(user.id);
-
-        // Refresh collector stats
         this.collectorStats$ = this.collectorService.getCollectorStats(user.id);
       }
     });

@@ -1,4 +1,4 @@
-// src/app/core/services/auth.service.ts
+
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { User } from '../../shared/models/user.model';
@@ -12,7 +12,6 @@ export class AuthService {
   currentUser$ = this.currentUserSubject.asObservable();
 
   constructor() {
-    // Initialize collectors on service start
     this.initializeCollectors();
   }
 
@@ -39,7 +38,7 @@ export class AuthService {
     const newUser = {
       ...user,
       id: Date.now().toString(),
-      points: 0,
+      points: 1000,
       createdAt: new Date(),
       updatedAt: new Date()
     };

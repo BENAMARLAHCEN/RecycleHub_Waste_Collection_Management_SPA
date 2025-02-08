@@ -18,8 +18,6 @@ export const initialState: CollectionRequestState = {
 
 export const collectionRequestReducer = createReducer(
   initialState,
-
-  // Create Request
   on(CollectionRequestActions.createRequest, state => ({
     ...state,
     loading: true,
@@ -36,8 +34,6 @@ export const collectionRequestReducer = createReducer(
     loading: false,
     error
   })),
-
-  // Load Requests
   on(CollectionRequestActions.loadUserRequests, state => ({
     ...state,
     loading: true,
@@ -54,8 +50,6 @@ export const collectionRequestReducer = createReducer(
     loading: false,
     error
   })),
-
-  // Load City Requests
   on(CollectionRequestActions.loadCityRequests, state => ({
     ...state,
     loading: true,
@@ -72,8 +66,6 @@ export const collectionRequestReducer = createReducer(
     loading: false,
     error
   })),
-
-  // Update Request
   on(CollectionRequestActions.updateRequest, state => ({
     ...state,
     loading: true,
@@ -90,8 +82,6 @@ export const collectionRequestReducer = createReducer(
     loading: false,
     error
   })),
-
-  // Delete Request
   on(CollectionRequestActions.deleteRequest, state => ({
     ...state,
     loading: true,
@@ -108,8 +98,6 @@ export const collectionRequestReducer = createReducer(
     loading: false,
     error
   })),
-
-  // Validate Request
   on(CollectionRequestActions.validateRequest, state => ({
     ...state,
     loading: true,
@@ -126,8 +114,6 @@ export const collectionRequestReducer = createReducer(
     loading: false,
     error
   })),
-
-  // Clear Errors
   on(CollectionRequestActions.clearCollectionErrors, state => ({
     ...state,
     error: null

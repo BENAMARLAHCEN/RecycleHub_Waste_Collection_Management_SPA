@@ -1,4 +1,4 @@
-// src/app/features/dashboard/components/collection-edit/collection-edit.component.ts
+
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
@@ -192,7 +192,6 @@ export class CollectionEditComponent implements OnInit {
     private fb: FormBuilder,
     private store: Store
   ) {
-    // Set minimum date to today
     const today = new Date();
     this.minDate = today.toISOString().split('T')[0];
 
@@ -208,15 +207,10 @@ export class CollectionEditComponent implements OnInit {
 
   ngOnInit() {
     if (this.request) {
-      // Initialize waste items
       this.request.wasteItems.forEach(item => {
         this.addWasteItem(item);
       });
-
-      // Set existing photos
       this.existingPhotos = this.request.photos || [];
-
-      // Set other form values
       this.editForm.patchValue({
         collectionDate: new Date(this.request.collectionDate).toISOString().split('T')[0],
         timeSlot: this.request.timeSlot,

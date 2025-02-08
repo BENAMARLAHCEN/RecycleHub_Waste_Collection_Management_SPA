@@ -134,8 +134,6 @@ export class PointsComponent implements OnInit {
   ) {
     this.currentUser$ = this.authService.currentUser$;
     this.transactions$ = new Observable();
-
-    // Initialize conversion options from environment
     const voucherConversion = environment.voucherConversion as Record<string, number>;
     this.conversionOptions = Object.entries(voucherConversion).map(([points, amount]) => ({
       points: Number(points),

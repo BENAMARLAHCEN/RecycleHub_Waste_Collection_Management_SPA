@@ -1,4 +1,4 @@
-// src/app/core/services/collector.service.ts
+
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -49,13 +49,9 @@ export class CollectorService {
     }
 
     const request = requests[requestIndex];
-
-    // Check if request is still available
     if (request.status !== RequestStatus.PENDING) {
       return throwError(() => new Error('Request is no longer available'));
     }
-
-    // Check collector's active collections limit
     const activeCollections = requests.filter(r =>
       r.collectorId === collectorId &&
       [RequestStatus.OCCUPIED, RequestStatus.IN_PROGRESS].includes(r.status)
@@ -64,8 +60,6 @@ export class CollectorService {
     if (activeCollections.length >= 3) {
       return throwError(() => new Error('Maximum active collections limit reached'));
     }
-
-    // Update request
     const updatedRequest = {
       ...request,
       status: RequestStatus.OCCUPIED,
@@ -117,22 +111,15 @@ export class CollectorService {
     }
 
     const request = requests[requestIndex];
-
-    // Calculate points based on waste types and validated weight
     let totalPoints = 0;
     for (const item of request.wasteItems) {
-      // Get points per kg for this waste type
       const pointsPerKg = environment.pointsConfig[item.type.toLowerCase()];
       if (!pointsPerKg) {
         console.error(`No points configuration found for waste type: ${item.type}`);
         continue;
       }
-
-      // Calculate weight ratio for this item
       const itemWeightRatio = item.weight / request.totalWeight;
       const itemValidatedWeight = validatedWeight * itemWeightRatio;
-
-      // Calculate points for this item
       const itemPoints = Math.floor(itemValidatedWeight * pointsPerKg);
       totalPoints += itemPoints;
 
@@ -147,41 +134,29 @@ export class CollectorService {
     }
 
     console.log('Total points earned:', totalPoints);
-
-    // Update user points in localStorage
     const users = this.getUsers();
     const userIndex = users.findIndex(u => u.id === request.userId);
 
     if (userIndex === -1) {
       return throwError(() => new Error('User not found'));
     }
-
-    // Get the user and ensure it exists
     const user = users[userIndex];
     if (!user) {
       return throwError(() => new Error('User not found'));
     }
-
-    // Ensure points is initialized if it doesn't exist
     user.points = (user.points || 0) + totalPoints;
-
-    // Save updated users back to localStorage
     localStorage.setItem(environment.localStorage.usersKey, JSON.stringify(users));
-
-    // Update request
     const updatedRequest = {
       ...request,
       status: RequestStatus.VALIDATED,
       validatedWeight,
       validationPhotos: photos,
-      pointsEarned: totalPoints, // Store points earned in the request
+      pointsEarned: totalPoints,
       updatedAt: new Date()
     };
 
     requests[requestIndex] = updatedRequest;
     this.saveRequests(requests);
-
-    // Also update current user in localStorage if it's the same user
     const currentUser = JSON.parse(localStorage.getItem(environment.localStorage.userKey) || '{}');
     if (currentUser.id === request.userId) {
       currentUser.points = users[userIndex].points;

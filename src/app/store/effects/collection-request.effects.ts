@@ -79,8 +79,6 @@ export class CollectionRequestEffects {
       )
     )
   );
-
-  // Navigate after successful request creation
   createRequestSuccess$ = createEffect(() =>
       this.actions$.pipe(
         ofType(CollectionRequestActions.createRequestSuccess),

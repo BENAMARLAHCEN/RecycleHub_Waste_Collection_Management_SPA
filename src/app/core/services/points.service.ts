@@ -1,4 +1,4 @@
-// src/app/core/services/points.service.ts
+
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
@@ -39,8 +39,6 @@ export class PointsService {
         if ((user.points ?? 0) < points) {
           return throwError(() => new Error('Insufficient points'));
         }
-
-        // Update user points
         const users = this.getUsers();
         const userIndex = users.findIndex(u => u.id === user.id);
         if (userIndex === -1) {
@@ -49,8 +47,6 @@ export class PointsService {
 
         users[userIndex].points = (users[userIndex].points ?? 0) - points;
         localStorage.setItem(environment.localStorage.usersKey, JSON.stringify(users));
-
-        // Create voucher transaction
         const transaction: VoucherTransaction = {
           id: Date.now().toString(),
           userId: user.id ?? '',

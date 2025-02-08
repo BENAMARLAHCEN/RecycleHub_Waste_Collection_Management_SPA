@@ -1,4 +1,3 @@
-// src/app/shared/models/collection-request.model.ts
 export enum RequestStatus {
   PENDING = 'En attente',
   OCCUPIED = 'Occupée',

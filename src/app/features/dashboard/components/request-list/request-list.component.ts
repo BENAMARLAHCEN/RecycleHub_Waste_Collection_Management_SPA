@@ -1,4 +1,4 @@
-// src/app/features/dashboard/components/request-list/request-list.component.ts
+
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
@@ -245,20 +245,14 @@ export class RequestListComponent implements OnInit {
     this.filteredRequests$ = this.requests$.pipe(
       map(requests => {
         let filtered = [...requests];
-
-        // Apply status filter
         if (this.statusFilter) {
           filtered = filtered.filter(r => r.status === this.statusFilter);
         }
-
-        // Apply sorting
         if (this.sortBy === 'date') {
           filtered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
         } else if (this.sortBy === 'weight') {
           filtered.sort((a, b) => b.totalWeight - a.totalWeight);
         }
-
-        // Apply limit if specified
         if (this.limit) {
           filtered = filtered.slice(0, this.limit);
         }
@@ -339,13 +333,10 @@ export class RequestListComponent implements OnInit {
   }
 
   onEdit(request: CollectionRequest) {
-    // Check if request is editable (only PENDING requests)
     if (request.status !== RequestStatus.PENDING) {
       alert('Only pending requests can be edited');
       return;
     }
-
-    // Emit event to parent component to handle edit
     this.editRequest.emit(request);
   }
 

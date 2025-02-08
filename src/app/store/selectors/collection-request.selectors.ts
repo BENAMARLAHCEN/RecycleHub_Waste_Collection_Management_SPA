@@ -1,4 +1,4 @@
-// src/app/store/selectors/collection-request.selectors.ts
+
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { CollectionRequestState } from '../reducers/collection-request.reducer';
 import { RequestStatus } from '../../shared/models/collection-request.model';
@@ -56,7 +56,6 @@ export const selectRequestsByUser = (userId: string) => createSelector(
 export const selectTotalPoints = createSelector(
   selectValidatedRequests,
   (requests) => requests.reduce((total, request) => {
-    // Calculate points based on validated weight and waste type
     return total + request.validatedWeight!;
   }, 0)
 );

@@ -1,4 +1,4 @@
-// src/app/features/dashboard/components/request-form/request-form.component.ts
+
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
@@ -194,8 +194,6 @@ export class RequestFormComponent implements OnInit {
         alert('Total weight cannot exceed 10kg');
         return;
       }
-
-      // Dispatch create request action
       this.store.dispatch(createRequest({ request: this.requestForm.value }));
       this.close.emit();
     }
