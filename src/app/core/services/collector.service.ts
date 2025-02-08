@@ -79,6 +79,31 @@ export class CollectorService {
     return of(updatedRequest);
   }
 
+  startCollection(requestId: string): Observable<CollectionRequest> {
+    const requests = this.getAllRequests();
+    const requestIndex = requests.findIndex(r => r.id === requestId);
+
+    if (requestIndex === -1) {
+      return throwError(() => new Error('Request not found'));
+    }
+
+    const request = requests[requestIndex];
+    if (request.status !== RequestStatus.OCCUPIED) {
+      return throwError(() => new Error('Request cannot be started'));
+    }
+
+    const updatedRequest = {
+      ...request,
+      status: RequestStatus.IN_PROGRESS,
+      updatedAt: new Date()
+    };
+
+    requests[requestIndex] = updatedRequest;
+    this.saveRequests(requests);
+
+    return of(updatedRequest);
+  }
+
   completeCollection(
     requestId: string,
     validatedWeight: number,
@@ -94,23 +119,54 @@ export class CollectorService {
     const request = requests[requestIndex];
 
     // Calculate points based on waste types and validated weight
-    const totalRequestWeight = request.wasteItems.reduce((sum, item) => sum + item.weight, 0);
-    const weightRatio = validatedWeight / totalRequestWeight;
+    let totalPoints = 0;
+    for (const item of request.wasteItems) {
+      // Get points per kg for this waste type
+      const pointsPerKg = environment.pointsConfig[item.type.toLowerCase()];
+      if (!pointsPerKg) {
+        console.error(`No points configuration found for waste type: ${item.type}`);
+        continue;
+      }
 
-    const pointsEarned = request.wasteItems.reduce((total, item) => {
-      const itemValidatedWeight = item.weight * weightRatio;
-      const pointsConfig = environment.pointsConfig as Record<string, number>;
-      return total + (itemValidatedWeight * pointsConfig[item.type.toLowerCase()]);
-    }, 0);
+      // Calculate weight ratio for this item
+      const itemWeightRatio = item.weight / request.totalWeight;
+      const itemValidatedWeight = validatedWeight * itemWeightRatio;
 
-    // Update user points
+      // Calculate points for this item
+      const itemPoints = Math.floor(itemValidatedWeight * pointsPerKg);
+      totalPoints += itemPoints;
+
+      console.log(`Points calculation for ${item.type}:`, {
+        pointsPerKg,
+        itemWeight: item.weight,
+        totalWeight: request.totalWeight,
+        weightRatio: itemWeightRatio,
+        validatedWeight: itemValidatedWeight,
+        itemPoints
+      });
+    }
+
+    console.log('Total points earned:', totalPoints);
+
+    // Update user points in localStorage
     const users = this.getUsers();
     const userIndex = users.findIndex(u => u.id === request.userId);
 
-    if (userIndex !== -1) {
-      users[userIndex].points = (users[userIndex].points || 0) + pointsEarned;
-      localStorage.setItem(environment.localStorage.usersKey, JSON.stringify(users));
+    if (userIndex === -1) {
+      return throwError(() => new Error('User not found'));
     }
+
+    // Get the user and ensure it exists
+    const user = users[userIndex];
+    if (!user) {
+      return throwError(() => new Error('User not found'));
+    }
+
+    // Ensure points is initialized if it doesn't exist
+    user.points = (user.points || 0) + totalPoints;
+
+    // Save updated users back to localStorage
+    localStorage.setItem(environment.localStorage.usersKey, JSON.stringify(users));
 
     // Update request
     const updatedRequest = {
@@ -118,11 +174,19 @@ export class CollectorService {
       status: RequestStatus.VALIDATED,
       validatedWeight,
       validationPhotos: photos,
+      pointsEarned: totalPoints, // Store points earned in the request
       updatedAt: new Date()
     };
 
     requests[requestIndex] = updatedRequest;
     this.saveRequests(requests);
+
+    // Also update current user in localStorage if it's the same user
+    const currentUser = JSON.parse(localStorage.getItem(environment.localStorage.userKey) || '{}');
+    if (currentUser.id === request.userId) {
+      currentUser.points = users[userIndex].points;
+      localStorage.setItem(environment.localStorage.userKey, JSON.stringify(currentUser));
+    }
 
     return of(updatedRequest);
   }
