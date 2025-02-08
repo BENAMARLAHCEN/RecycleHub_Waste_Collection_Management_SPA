@@ -2,6 +2,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';
+import {CollectorGuard} from "./core/guards/collector.guard";
 
 const routes: Routes = [
   {
@@ -21,6 +22,11 @@ const routes: Routes = [
     path: 'profile',
     canActivate: [AuthGuard],
     loadChildren: () => import('./features/profile/profile.module').then(m => m.ProfileModule)
+  },
+  {
+    path: 'collector',
+    canActivate: [AuthGuard, CollectorGuard],
+    loadChildren: () => import('./features/collector/collector.module').then(m => m.CollectorModule)
   },
   {
     path: 'points',

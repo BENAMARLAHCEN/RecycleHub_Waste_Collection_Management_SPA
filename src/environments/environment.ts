@@ -7,7 +7,7 @@ interface PointsConfig {
 }
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:4200', // Since we're using localStorage, this isn't used but included for future API integration
+  apiUrl: 'http://localhost:4200',
   localStorage: {
     userKey: 'recyclehub_user',
     usersKey: 'recyclehub_users',
@@ -15,22 +15,22 @@ export const environment = {
     pointsKey: 'recyclehub_points'
   },
   pointsConfig: {
-    plastic: 2,  // points per kg
+    plastic: 2,
     glass: 1,
     paper: 1,
     metal: 5
   } as PointsConfig,
-  maxCollectionWeight: 10, // in kg
+  maxCollectionWeight: 10,
   minCollectionWeight: 1,
   maxPendingRequests: 3,
   voucherConversion: {
-    100: 50,  // 100 points = 50 Dh
-    200: 120, // 200 points = 120 Dh
-    500: 350  // 500 points = 350 Dh
+    100: 50,
+    200: 120,
+    500: 350
   },
   collectionHours: {
-    start: 9,  // 09:00
-    end: 18    // 18:00
+    start: 9,
+    end: 18
   }
 };
 

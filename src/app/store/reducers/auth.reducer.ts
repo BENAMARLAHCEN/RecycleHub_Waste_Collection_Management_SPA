@@ -1,4 +1,3 @@
-// src/app/store/reducers/auth.reducer.ts
 import { createReducer, on } from '@ngrx/store';
 import { User } from '../../shared/models/user.model';
 import * as AuthActions from '../actions/auth.actions';

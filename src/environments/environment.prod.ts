@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://your-production-api.com', // For future use
+  apiUrl: 'https://your-production-api.com',
   localStorage: {
     userKey: 'recyclehub_user',
     usersKey: 'recyclehub_users',

@@ -31,7 +31,7 @@ export class AuthService {
 
   register(user: User): Observable<User> {
     const users = this.getUsers();
-
+    console.log(user);
     if (users.some(u => u.email === user.email)) {
       return throwError(() => new Error('Email already exists'));
     }
@@ -39,7 +39,6 @@ export class AuthService {
     const newUser = {
       ...user,
       id: Date.now().toString(),
-      isCollector: false,
       points: 0,
       createdAt: new Date(),
       updatedAt: new Date()

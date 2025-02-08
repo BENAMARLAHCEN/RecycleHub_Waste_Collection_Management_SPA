@@ -29,9 +29,8 @@ import { environment } from '../../../environments/environment';
               <div *ngFor="let option of conversionOptions"
                    class="border rounded-lg p-4 text-center hover:shadow-md transition-shadow">
                 <div class="text-2xl font-bold text-green-600 mb-2">{{option.points}} Points</div>
-                <div class="text-gray-600 mb-4">= {{option.amount}} Dh</div>
+                <div class="text-gray-600 mb-4">= {{option.amount | currency:'MAD':'symbol-narrow':'1.0-0'}}</div>
                 <button (click)="convertPoints(option.points)"
-                        [disabled]="(currentUser$ | async)?.points ?? 0 < option.points"
                         class="w-full px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed">
                   Convert
                 </button>
@@ -49,41 +48,41 @@ import { environment } from '../../../environments/environment';
             <div class="overflow-x-auto">
               <table class="min-w-full divide-y divide-gray-200">
                 <thead>
-                  <tr>
-                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Date
-                    </th>
-                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Points
-                    </th>
-                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Amount
-                    </th>
-                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Voucher Code
-                    </th>
-                  </tr>
+                <tr>
+                  <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Date
+                  </th>
+                  <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Points
+                  </th>
+                  <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Amount
+                  </th>
+                  <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Voucher Code
+                  </th>
+                </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                  <tr *ngFor="let transaction of transactions$ | async">
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {{transaction.createdAt | date:'medium'}}
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {{transaction.points}}
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {{transaction.amount}} Dh
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-mono text-gray-900">
-                      {{transaction.code}}
-                    </td>
-                  </tr>
-                  <tr *ngIf="(transactions$ | async)?.length === 0">
-                    <td colspan="4" class="px-6 py-4 text-center text-gray-500">
-                      No transactions yet
-                    </td>
-                  </tr>
+                <tr *ngFor="let transaction of transactions$ | async">
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {{transaction.createdAt | date:'medium'}}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {{transaction.points}}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {{transaction.amount}} Dh
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-mono text-gray-900">
+                    {{transaction.code}}
+                  </td>
+                </tr>
+                <tr *ngIf="(transactions$ | async)?.length === 0">
+                  <td colspan="4" class="px-6 py-4 text-center text-gray-500">
+                    No transactions yet
+                  </td>
+                </tr>
                 </tbody>
               </table>
             </div>

@@ -1,4 +1,4 @@
-// src/app/features/auth/components/register/register.component.ts
+//src/app/features/auth/components/register/register.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -25,10 +25,10 @@ import * as AuthActions from '../../../../store/actions/auth.actions';
               </label>
               <div class="mt-1">
                 <input id="email" type="email" formControlName="email"
-                  class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500">
+                       class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500">
               </div>
               <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid"
-                class="mt-1 text-sm text-red-600">
+                   class="mt-1 text-sm text-red-600">
                 Please enter a valid email address
               </div>
             </div>
@@ -40,7 +40,7 @@ import * as AuthActions from '../../../../store/actions/auth.actions';
               </label>
               <div class="mt-1">
                 <input id="password" type="password" formControlName="password"
-                  class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500">
+                       class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500">
               </div>
             </div>
 
@@ -51,7 +51,7 @@ import * as AuthActions from '../../../../store/actions/auth.actions';
               </label>
               <div class="mt-1">
                 <input id="firstName" type="text" formControlName="firstName"
-                  class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500">
+                       class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500">
               </div>
             </div>
 
@@ -62,7 +62,7 @@ import * as AuthActions from '../../../../store/actions/auth.actions';
               </label>
               <div class="mt-1">
                 <input id="lastName" type="text" formControlName="lastName"
-                  class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500">
+                       class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500">
               </div>
             </div>
 
@@ -73,7 +73,18 @@ import * as AuthActions from '../../../../store/actions/auth.actions';
               </label>
               <div class="mt-1">
                 <input id="address" type="text" formControlName="address"
-                  class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500">
+                       class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500">
+              </div>
+            </div>
+
+            <!-- City -->
+            <div>
+              <label for="city" class="block text-sm font-medium text-gray-700">
+                City
+              </label>
+              <div class="mt-1">
+                <input id="city" type="text" formControlName="city"
+                       class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500">
               </div>
             </div>
 
@@ -84,7 +95,7 @@ import * as AuthActions from '../../../../store/actions/auth.actions';
               </label>
               <div class="mt-1">
                 <input id="phone" type="tel" formControlName="phone"
-                  class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500">
+                       class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500">
               </div>
             </div>
 
@@ -95,13 +106,22 @@ import * as AuthActions from '../../../../store/actions/auth.actions';
               </label>
               <div class="mt-1">
                 <input id="birthDate" type="date" formControlName="birthDate"
-                  class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500">
+                       class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500">
               </div>
+            </div>
+
+            <!-- Collector Checkbox -->
+            <div class="flex items-center">
+              <input id="isCollector" type="checkbox" formControlName="isCollector"
+                     class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded">
+              <label for="isCollector" class="ml-2 block text-sm text-gray-900">
+                Register as a Collector
+              </label>
             </div>
 
             <div>
               <button type="submit" [disabled]="registerForm.invalid"
-                class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50">
+                      class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50">
                 Register
               </button>
             </div>
@@ -138,14 +158,17 @@ export class RegisterComponent implements OnInit {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       address: ['', Validators.required],
+      city: ['', Validators.required],
       phone: ['', Validators.required],
-      birthDate: ['', Validators.required]
+      birthDate: ['', Validators.required],
+      isCollector: [false]
     });
   }
 
   ngOnInit(): void {}
 
   onSubmit(): void {
+    console.log(this.registerForm);
     if (this.registerForm.valid) {
       this.store.dispatch(AuthActions.register({ user: this.registerForm.value }));
     }

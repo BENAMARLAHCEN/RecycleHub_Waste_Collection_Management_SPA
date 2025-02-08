@@ -12,6 +12,7 @@ import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { authReducer } from './store/reducers/auth.reducer';
 import { AuthEffects } from './store/effects/auth.effects';
 import { environment } from '../environments/environment';
+import {CollectorService} from "./core/services/collector.service";
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { environment } from '../environments/environment';
       logOnly: environment.production
     })
   ],
-  providers: [],
+  providers: [CollectorService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
