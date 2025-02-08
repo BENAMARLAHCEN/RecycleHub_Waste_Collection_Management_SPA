@@ -24,11 +24,6 @@ const routes: Routes = [
     loadChildren: () => import('./features/profile/profile.module').then(m => m.ProfileModule)
   },
   {
-    path: 'collector',
-    canActivate: [AuthGuard, CollectorGuard],
-    loadChildren: () => import('./features/collector/collector.module').then(m => m.CollectorModule)
-  },
-  {
     path: 'points',
     canActivate: [AuthGuard],
     loadChildren: () => import('./features/points/points.module').then(m => m.PointsModule)
