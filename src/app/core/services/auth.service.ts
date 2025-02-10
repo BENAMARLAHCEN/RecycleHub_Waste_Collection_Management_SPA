@@ -32,7 +32,7 @@ export class AuthService {
     const users = this.getUsers();
     console.log(user);
     if (users.some(u => u.email === user.email)) {
-      return throwError(() => new Error('Email already exists'));
+      console.log('email already exists');
     }
 
     const newUser = {
@@ -45,7 +45,6 @@ export class AuthService {
 
     users.push(newUser);
     localStorage.setItem(environment.localStorage.usersKey, JSON.stringify(users));
-
     const userWithoutPassword = { ...newUser, password: undefined };
     localStorage.setItem(environment.localStorage.userKey, JSON.stringify(userWithoutPassword));
     this.currentUserSubject.next(userWithoutPassword);
