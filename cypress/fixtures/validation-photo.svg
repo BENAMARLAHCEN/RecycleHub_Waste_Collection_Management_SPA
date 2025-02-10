@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Background -->
+  <rect width="200" height="200" fill="#ecfdf5"/>
+  
+  <!-- Recycling Symbol -->
+  <g transform="translate(100,100) scale(0.8)">
+    <path d="M0,-40 L20,-20 L10,-20 L20,10 L-20,10 L-10,-20 L-20,-20 Z" fill="#059669"/>
+    <path d="M34.6,20 L14.6,40 L14.6,30 L-15.4,40 L-25.4,10 L4.6,20 L4.6,10 Z" fill="#059669"/>
+    <path d="M-34.6,20 L-14.6,-20 L-4.6,-10 L15.4,-40 L25.4,-10 L-4.6,-20 L-4.6,-30 Z" fill="#059669"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="100" y="190" text-anchor="middle" font-family="Arial" font-size="12" fill="#065f46">
+    Validation Photo
+  </text>
+</svg>

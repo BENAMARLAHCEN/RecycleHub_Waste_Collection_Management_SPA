@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Background -->
+  <rect width="200" height="200" fill="#f0f9ff"/>
+  
+  <!-- Profile Icon -->
+  <circle cx="100" cy="70" r="40" fill="#93c5fd"/>
+  <path d="M100 120 Q 100 180 160 180 L40 180 Q100 180 100 120" fill="#93c5fd"/>
+  
+  <!-- Text -->
+  <text x="100" y="190" text-anchor="middle" font-family="Arial" font-size="12" fill="#1e40af">
+    Test Photo
+  </text>
+</svg>
